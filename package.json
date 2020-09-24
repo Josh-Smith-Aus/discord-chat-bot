@@ -1,0 +1,22 @@
+{
+  "name": "discordbot",
+  "version": "1.0.0",
+  "description": "discord chat bot for fun ",
+  "main": "discordbot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Josh-Smith-Aus/discord-chat-bot.git"
+  },
+  "author": "Josh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Josh-Smith-Aus/discord-chat-bot/issues"
+  },
+  "homepage": "https://github.com/Josh-Smith-Aus/discord-chat-bot#readme",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  }
+}
