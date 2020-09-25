@@ -76,15 +76,6 @@ client.on('message', message => {
 
 
 
-//trying new stuff
-client.on('message', message => {
-	if(message.author.id === (305289523619692544))  {
-		// message.react(':face_with_symbols_over_mouth:');
-		message.send('working?')
-
-	}
-});
-
 
 client.login(token);
 

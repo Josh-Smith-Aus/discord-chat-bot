@@ -1,11 +1,18 @@
 const fs = require('fs');
 const Discord = require('discord.js');
 const { prefix, token } = require('./config.json');
+const { userInfo } = require('os');
+const {victim1, victim2 } = require('./attackee-id');
+const victim = victim1 //my id is victim1 for test and danbot is victim2
+const {insults} = require('./insults.json');
+//["go away", "you're not welcome here", "you smell", "on your way", "maybe it's time you leave this place", "a good bot would have more respect for themselves","... i have no words for how much you suck"];
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
+
+
 
 for (const file of commandFiles) {
 	const command = require(`./commands/${file}`);
@@ -14,6 +21,7 @@ for (const file of commandFiles) {
 
 const cooldowns = new Discord.Collection();
 
+
 client.once('ready', () => {
 	console.log('nippsbot is online!');
 });
@@ -21,6 +29,20 @@ client.once('ready', () => {
 
 //main command code, copied from discord tute
 client.on('message', message => {
+
+// if danbot then attack with random insult
+
+	if (message.author.id === victim) {
+		function getRandomIntInclusive(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		  }
+		var randomInsult =insults[getRandomIntInclusive(0,insults.length-1)];
+			message.channel.send(randomInsult);
+	}
+
+//normal stuff
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
@@ -28,8 +50,9 @@ client.on('message', message => {
 
 	const command = client.commands.get(commandName)
 		|| client.commands.find(cmd => cmd.aliases && cmd.aliases.includes(commandName));
-
+	
 	if (!command) return;
+
 
 	if (command.guildOnly && message.channel.type === 'dm') {
 		return message.reply('I can\'t execute that command inside DMs!');
@@ -71,11 +94,15 @@ client.on('message', message => {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
 	}
+
 });
 
 
 
+
+
 client.login(token);
+
 
 
 
