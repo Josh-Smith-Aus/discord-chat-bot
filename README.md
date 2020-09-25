@@ -29,3 +29,10 @@ to run the discord bot / get it online --> must be in the directory file i.e use
 ## finished
  - command file/list
  - main control setup
+
+
+
+
+ ## usefull websites:
+ https://discordjs.guide/creating-your-bot/commands-with-user-input.html#basic-arguments
+ 

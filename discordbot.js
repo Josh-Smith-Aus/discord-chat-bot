@@ -2,6 +2,10 @@
 
 const Discord = require('discord.js');
 
+//grabbing prefix and token form json file so we can use here later and change easily in other file
+//could use 'const config = ...' then later use config.prefix but this is easier
+const { prefix, token } = require('./config.json');
+
 const client = new Discord.Client();
 
 const fs = require('fs');
@@ -10,7 +14,6 @@ client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
 
-const prefix = '-';
 
 //loop through files to execute commands
 for(const file of commandFiles){
@@ -36,9 +39,13 @@ client.on('message', message =>{
     if(command === 'ping'){
         client.commands.get('ping').execute(message, args);
     }
+
+    if(command === 'attack'){
+        client.commands.get('attack').execute(message, args);
+    }
     
 });
 
 // Keep last. Will allow this to update the bot//
 // check before starting again because discord will reset code after posted to public github//
-client.login('NzU4NjUyOTY2NzgwNjY1ODU2.X2yEog.5OlZVUoffGC20lfjW5brRT8izpg');
+client.login(token);
