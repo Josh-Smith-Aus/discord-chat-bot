@@ -1,6 +1,6 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const { prefix, token } = require('./config.json');
+const { prefix, token } = require('../config.json');
 
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
@@ -73,6 +73,17 @@ client.on('message', message => {
 	}
 });
 
+
+
+
+//trying new stuff
+client.on('message', message => {
+	if(message.author.id === (305289523619692544))  {
+		// message.react(':face_with_symbols_over_mouth:');
+		message.send('working?')
+
+	}
+});
 
 
 client.login(token);
