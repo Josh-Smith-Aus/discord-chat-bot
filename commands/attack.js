@@ -10,8 +10,10 @@ module.exports= {
     description: "This is the attack command",
     execute(message, args){
         //where our code will go when ping gets called
-
-        message.channel.send(replies[random]);
-
+        const taggedUser = message.mentions.users.first();
+        
+        if (!message.mentions.users.size) {
+            return message.reply('you need to tag a user in order to kick them!');
+        } else message.channel.send(`You wanted to kick: ${taggedUser.username}`);
     }
 }

@@ -1,10 +1,8 @@
-module.exports= {
-    name: 'ping',
-    description: "This is a ping command!",
-    execute(message, args){
-        //where our code will go when ping gets called
-
-        message.channel.send('pong!');
-
-    }
-}
+module.exports = {
+	name: 'ping',
+	description: 'Ping!',
+	cooldown: 5,
+	execute(message) {
+		message.channel.send('Pong.');
+	},
+};
