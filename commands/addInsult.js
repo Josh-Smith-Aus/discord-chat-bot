@@ -6,13 +6,13 @@ module.exports= {
 
     //create small arrray then push that array to insults.json
     
-//take args, put in new array, add spaces, push to insults
+    //take args, put in new array, add spaces, push to insults
+    //only pushes loccally, need to use sql
         const newInsult = args.join(' ');//insult to string
 
         insults.push(`${newInsult}`);
-
     
-        message.channel.send(`Added "${newInsult}" to insult list`)
+        message.channel.send(`Added "${newInsult}" to insult list(currently not working)`)
 
 	},
 };

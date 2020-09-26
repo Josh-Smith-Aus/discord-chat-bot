@@ -7,6 +7,8 @@ const victim = victim1 //my id is victim1 for test and danbot is victim2
 const {insults} = require('./insults.json');
 //["go away", "you're not welcome here", "you smell", "on your way", "maybe it's time you leave this place", "a good bot would have more respect for themselves","... i have no words for how much you suck"];
 
+
+
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
