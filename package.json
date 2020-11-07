@@ -17,8 +17,10 @@
   },
   "homepage": "https://github.com/Josh-Smith-Aus/discord-chat-bot#readme",
   "dependencies": {
-    "discord.js": "^12.3.1",
+    "discord.js": "^12.4.1",
     "eslint": "^7.9.0",
-    "mysql": "^2.18.1"
+    "mysql": "^2.18.1",
+    "sequelize": "^6.3.5",
+    "sqlite3": "^5.0.0"
   }
 }
