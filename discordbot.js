@@ -1,45 +1,18 @@
 const fs = require('fs');
 const Discord = require('discord.js');
-const Sequelize = require('sequelize'); //sql database
 const { prefix, token } = require('./config.json');
+const {Tags} = require('../database.js');
 const { userInfo } = require('os');
 const {victim1, victim2 } = require('./attackee-id');
 const victim = victim1 //my id is victim1 for test and danbot is victim2
 const {insults} = require('./insults.json');
 //["go away", "you're not welcome here", "you smell", "on your way", "maybe it's time you leave this place", "a good bot would have more respect for themselves","... i have no words for how much you suck"];
 
-
-
 const client = new Discord.Client();
 client.commands = new Discord.Collection();
 
 const commandFiles = fs.readdirSync('./commands').filter(file => file.endsWith('.js'));
-
-    //database initialisation
-const sequelize = new Sequelize('database', 'user', 'password', {
-	host: 'localhost',
-	dialect: 'sqlite',
-	logging: false,
-	// SQLite only
-	storage: 'insults.sqlite',
-});
-/*
- * equivalent to: CREATE TABLE tags(
- * name VARCHAR(255),
- * description TEXT,
- * username VARCHAR(255),
- * usage INT
- * );
- */
-const Tags = sequelize.define('tags', {
-	Insult: {
-		type: Sequelize.STRING,
-		unique: true, //unique:true means there will never be duplicates
-	},
-
-});
-
-
+	
 
 
 for (const file of commandFiles) {
@@ -50,7 +23,7 @@ for (const file of commandFiles) {
 const cooldowns = new Discord.Collection();
 
 
-client.once('ready', () => {
+client.once('ready', () => { //may need to run async before running code for databse in different file
 	console.log('nippsbot is online!');
 	Tags.sync();
 });
@@ -58,32 +31,14 @@ client.once('ready', () => {
 
 //main command code, copied from discord tute
 client.on('message', async message => {
-
-// if danbot then attack with random insult
-
-	if (message.author.id === victim) {
-		function getRandomIntInclusive(min, max) {
-			min = Math.ceil(min);
-			max = Math.floor(max);
-			return Math.floor(Math.random() * (max - min + 1)) + min;
-		  }
-		var randomInsult =insults[getRandomIntInclusive(0,insults.length-1)];
-//			message.channel.send(randomInsult);
+//database stuff
+	const input = message.content.slice(prefix.length).trim().split(' ');
+	const commandArgs = input.join(' ');
+	const splitArgs = commandArgs.split(' ');
+	const tagName = splitArgs.shift();
+	const tagDescription = splitArgs.join(' ');
 	
-
-		const tagName = commandArgs;
-
-		// equivalent to: SELECT * FROM tags WHERE name = 'tagName' LIMIT 1;
-		const tag = await Tags.findOne({ where: { Insult: tagName } });
-		if (tag) {
-			return message.channel.send(`${tagName} was created by ${tag.username} at ${tag.createdAt} and has been used ${tag.usage_count} times.`);
-		}
-		return message.reply(`Could not find tag: ${tagName}`);
-	}
-
-
-
-
+	
 
 //normal stuff
 	if (!message.content.startsWith(prefix) || message.author.bot) return;
@@ -136,6 +91,20 @@ client.on('message', async message => {
 	} catch (error) {
 		console.error(error);
 		message.reply('there was an error trying to execute that command!');
+	}
+
+	// if danbot then attack with random insult
+
+	if (message.author.id === victim) {
+		function getRandomIntInclusive(min, max) {
+			min = Math.ceil(min);
+			max = Math.floor(max);
+			return Math.floor(Math.random() * (max - min + 1)) + min;
+		  }
+		var randomInsult =insults[getRandomIntInclusive(0,insults.length-1)];
+//			message.channel.send(randomInsult);
+	
+
 	}
 
 });
